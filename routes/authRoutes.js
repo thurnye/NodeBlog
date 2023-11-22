@@ -9,7 +9,8 @@ module.exports = app => {
   );
 
   app.get(
-    '/auth/google/callback',
+    // '/auth/google/callback',
+    '/oauth2callback',
     passport.authenticate('google'),
     (req, res) => {
       res.redirect('/blogs');

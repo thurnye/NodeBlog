@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
-const passport = require('passport');
 const bodyParser = require('body-parser');
-const keys = require('./config/keys');
+require('dotenv').config();
 
+const passport = require('passport');
+const keys = require('./config/keys');
 require('./models/User');
 require('./models/Blog');
 require('./services/passport');
@@ -39,7 +40,7 @@ if (['production'].includes(process.env.NODE_ENV)) {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Listening on port`, PORT);
 });
