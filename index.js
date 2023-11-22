@@ -23,23 +23,6 @@ app.use(
   })
 );
 
-//https://stackoverflow.com/questions/72375564/typeerror-req-session-regenerate-is-not-a-function-using-passport
-// register regenerate & save after the cookieSession middleware initialization
-// app.use(function(request, response, next) {
-//   console.log(request.session)
-//   if (request.session && !request.session.regenerate) {
-//       request.session.regenerate = (cb) => {
-//           cb()
-//       }
-//   }
-//   if (request.session && !request.session.save) {
-//       request.session.save = (cb) => {
-//           cb()
-//       }
-//   }
-//   next()
-// })
-
 app.use(passport.initialize());
 app.use(passport.session());
 
