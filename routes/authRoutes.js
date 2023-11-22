@@ -9,17 +9,19 @@ module.exports = app => {
   );
 
   app.get(
-    // '/auth/google/callback',
-    '/oauth2callback',
+    '/auth/google/callback',
     passport.authenticate('google'),
     (req, res) => {
-      res.redirect('/blogs');
+      // console.log('redirecting....')
+      // res.redirect('/blogs');
+      res.redirect('http://localhost:3000/')
     }
   );
 
   app.get('/auth/logout', (req, res) => {
     req.logout();
-    res.redirect('/');
+    // res.redirect('/');
+    res.redirect('http://localhost:3000/')
   });
 
   app.get('/api/current_user', (req, res) => {

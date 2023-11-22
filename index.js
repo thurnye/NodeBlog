@@ -11,10 +11,7 @@ require('./models/Blog');
 require('./services/passport');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
@@ -25,6 +22,24 @@ app.use(
     keys: [keys.cookieKey],
   })
 );
+
+//https://stackoverflow.com/questions/72375564/typeerror-req-session-regenerate-is-not-a-function-using-passport
+// register regenerate & save after the cookieSession middleware initialization
+// app.use(function(request, response, next) {
+//   console.log(request.session)
+//   if (request.session && !request.session.regenerate) {
+//       request.session.regenerate = (cb) => {
+//           cb()
+//       }
+//   }
+//   if (request.session && !request.session.save) {
+//       request.session.save = (cb) => {
+//           cb()
+//       }
+//   }
+//   next()
+// })
+
 app.use(passport.initialize());
 app.use(passport.session());
 
