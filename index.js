@@ -1,19 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
-const passport = require('passport');
 const bodyParser = require('body-parser');
-const keys = require('./config/keys');
+require('dotenv').config();
 
+const passport = require('passport');
+const keys = require('./config/keys');
 require('./models/User');
 require('./models/Blog');
 require('./services/passport');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(keys.mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(keys.mongoURI);
 
 const app = express();
 
@@ -24,6 +22,24 @@ app.use(
     keys: [keys.cookieKey],
   })
 );
+
+//https://stackoverflow.com/questions/72375564/typeerror-req-session-regenerate-is-not-a-function-using-passport
+// register regenerate & save after the cookieSession middleware initialization
+// app.use(function(request, response, next) {
+//   console.log(request.session)
+//   if (request.session && !request.session.regenerate) {
+//       request.session.regenerate = (cb) => {
+//           cb()
+//       }
+//   }
+//   if (request.session && !request.session.save) {
+//       request.session.save = (cb) => {
+//           cb()
+//       }
+//   }
+//   next()
+// })
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -39,7 +55,7 @@ if (['production'].includes(process.env.NODE_ENV)) {
   });
 }
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Listening on port`, PORT);
 });
